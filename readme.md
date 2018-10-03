@@ -11,4 +11,7 @@ Username: "xxxx"
 Password: "xxxx"
 
 # Methods
--
+- register(name, password, email)
+- login(name, password): boolean
+    *currently this only checks if the credentials is correct.
+

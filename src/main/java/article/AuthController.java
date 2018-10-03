@@ -19,4 +19,17 @@ public class AuthController {
         accountRepository.save(account);
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public Boolean login(
+    		@RequestBody(required=false) Account account
+    ) {
+        Account accountEntity = accountRepository.findByName(account.getName());
+        if (accountEntity == null) {
+        	return false;
+        } else {
+        	String hash = accountEntity.getPassword();
+        	return PasswordUtil.validate(account.getPassword(), hash);        	
+        }
+    }
+
 }
