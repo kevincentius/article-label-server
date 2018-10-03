@@ -14,4 +14,4 @@ Password: "xxxx"
 - register(name, password, email)
 - login(name, password): boolean
     *currently this only checks if the credentials is correct.
-
+- labels(): QuestionDTO[]

@@ -14,16 +14,17 @@ public class AuthController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public void register(
-    		@RequestBody(required=false) Account account
+    		@RequestBody(required=false) AccountDTO account
     ) {
+    	account.setPassword(PasswordUtil.hash(account.getPassword()));
         accountRepository.save(account);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Boolean login(
-    		@RequestBody(required=false) Account account
+    		@RequestBody(required=false) AccountDTO account
     ) {
-        Account accountEntity = accountRepository.findByName(account.getName());
+        AccountDTO accountEntity = accountRepository.findByName(account.getName());
         if (accountEntity == null) {
         	return false;
         } else {

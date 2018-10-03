@@ -5,8 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
-public class Account {
+@Entity(name="account")
+public class AccountDTO {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
