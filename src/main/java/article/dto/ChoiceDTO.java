@@ -1,4 +1,4 @@
-package article;
+package article.dto;
 
 public class ChoiceDTO {
 

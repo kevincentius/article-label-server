@@ -1,4 +1,4 @@
-package article;
+package article.dto;
 
 import org.springframework.data.repository.CrudRepository;
 

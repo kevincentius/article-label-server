@@ -1,4 +1,4 @@
-package article;
+package article.endpoint;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -12,9 +12,17 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import article.dto.AccountDTO;
+import article.dto.ArticleDTO;
+import article.dto.ChoiceDTO;
+import article.dto.LabelDTO;
+import article.dto.QuestionDTO;
+import article.dto.SubmitDTO;
 
 @RestController
 @RequestMapping("/api")
@@ -27,13 +35,21 @@ public class ApiController {
     		@RequestAttribute("account") AccountDTO account
     ) {
     	String sql = getResourceFileAsString("sql/next-article.sql");
-    	return jdbcTemplate.queryForObject(sql, new Object[]{account.getId()}, (rs, rn) -> {
+    	List<ArticleDTO> result = jdbcTemplate.query(sql, new Object[] {account.getId()}, (rs, rn) -> {
     		ArticleDTO article = new ArticleDTO();
     		article.setId(rs.getLong("id"));
     		article.setTitle(rs.getString("title"));
     		article.setContent(rs.getString("content"));
     		return article;
     	});
+    	
+    	if (result.size() == 1) {
+    		return result.get(0);
+    	} else if (result.size() == 0) {
+    		return null;
+    	} else {
+    		throw new RuntimeException("Multiple results from next-article.");
+    	}
     }
 
     @RequestMapping(value = "/labels", method = RequestMethod.GET)
@@ -62,6 +78,33 @@ public class ApiController {
     	});
     	
     	return questions;
+    }
+
+    /**
+     * Saves the submitted labels into the database.
+     * 
+     * Returns the next article.
+     * @return 
+     */
+    @RequestMapping(value = "/submit", method = RequestMethod.POST)
+    public ArticleDTO submitLabels(
+    		@RequestAttribute("account") AccountDTO account,
+    		@RequestBody SubmitDTO submitDTO
+    ) {
+    	List<Object[]> batchArgs = new ArrayList<>();
+		for (LabelDTO label : submitDTO.getLabels()) {
+			batchArgs.add(new Object[] {
+					submitDTO.getArticle(),
+					account.getId(),
+					label.getQuestion(),
+					label.getChoice()
+			});
+		}
+		
+		String sql = "INSERT INTO label (article, account, question, choice) VALUES (?,?,?,?)";
+		jdbcTemplate.batchUpdate(sql, batchArgs);
+		
+		return nextArticle(account);
     }
     
     /**

@@ -13,6 +13,10 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import article.dto.AccountDTO;
+import article.dto.AccountRepository;
+import article.util.PasswordUtil;
+
 @EnableWebMvc
 @Configuration
 public class SpringWebMvcConfig implements WebMvcConfigurer {

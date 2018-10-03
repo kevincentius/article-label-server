@@ -1,4 +1,4 @@
-package article;
+package article.util;
 
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;

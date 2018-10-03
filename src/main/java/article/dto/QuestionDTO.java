@@ -1,6 +1,5 @@
-package article;
+package article.dto;
 
-import java.awt.Choice;
 import java.util.List;
 
 public class QuestionDTO {

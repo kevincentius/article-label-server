@@ -5,7 +5,7 @@ FROM (
 	LEFT JOIN label l
 	ON l.article=a.id
 	GROUP BY a.id
-	HAVING COUNT(DISTINCT l.account) < 10
+	HAVING COUNT(DISTINCT l.account) < 2
 ) unlabelled
 
 LEFT JOIN label lc

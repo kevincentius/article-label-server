@@ -1,4 +1,4 @@
-package article;
+package article.dto;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
