@@ -1,11 +1,16 @@
+
 SELECT unlabelled.*
 FROM (
 	SELECT a.*
 	FROM article a
 	LEFT JOIN label l
 	ON l.article=a.id
-	GROUP BY a.id
-	HAVING COUNT(DISTINCT l.account) < 2
+
+	INNER JOIN config rpa
+	ON rpa.key = 'reviews_per_article'
+	
+	GROUP BY a.id, rpa.int_value
+	HAVING COUNT(DISTINCT l.account) < rpa.int_value
 ) unlabelled
 
 LEFT JOIN label lc
@@ -13,4 +18,4 @@ ON lc.article = unlabelled.id
 AND lc.account = ?
 
 WHERE lc.article IS NULL
-LIMIT 1;
+LIMIT 1

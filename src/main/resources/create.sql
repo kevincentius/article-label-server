@@ -1,3 +1,9 @@
+CREATE TABLE config (
+	key VARCHAR(45) PRIMARY KEY,
+	str_value VARCHAR(255),
+	int_value INTEGER
+);
+
 CREATE TABLE account (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(45) UNIQUE,
@@ -35,3 +41,4 @@ CREATE TABLE label (
 	PRIMARY KEY (article, account, question)
 );
 
+INSERT INTO config (key, int_value) VALUES ('reviews_per_article', 10);
