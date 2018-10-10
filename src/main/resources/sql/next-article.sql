@@ -7,7 +7,7 @@ FROM (
 	ON l.article=a.id
 
 	INNER JOIN config rpa
-	ON rpa.key = 'reviews_per_article'
+	ON rpa.id = 'reviews_per_article'
 	
 	GROUP BY a.id, rpa.int_value
 	HAVING COUNT(DISTINCT l.account) < rpa.int_value

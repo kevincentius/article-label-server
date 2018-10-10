@@ -1,7 +1,7 @@
 CREATE TABLE config (
-	id VARCHAR(45) PRIMARY KEY,
+	key VARCHAR(45) PRIMARY KEY,
 	str_value VARCHAR(255),
-	int_value INT
+	int_value INTEGER
 );
 
 CREATE TABLE account (
@@ -19,26 +19,26 @@ CREATE TABLE article (
 
 CREATE TABLE question (
 	id SERIAL PRIMARY KEY,
-	pos INT,
+	pos INTEGER,
 	name VARCHAR(255),
 	description TEXT,
-	num_choices INT
+	num_choices INTEGER
 );
 
 CREATE TABLE choice (
 	id SERIAL PRIMARY KEY,
-	question INT REFERENCES question(id),
-	pos INT,
+	question INTEGER REFERENCES question(id),
+	pos INTEGER,
 	name VARCHAR(255),
 	UNIQUE(question, pos)
 );
 
 CREATE TABLE label (
-	article INT REFERENCES article(id),
-	account INT REFERENCES account(id),
-	question INT REFERENCES question(id),
-	choice INT REFERENCES choice(id),
+	article INTEGER REFERENCES article(id),
+	account INTEGER REFERENCES account(id),
+	question INTEGER REFERENCES question(id),
+	choice INTEGER REFERENCES choice(id),
 	PRIMARY KEY (article, account, question)
 );
 
-INSERT INTO config (id, int_value) VALUES ('reviews_per_article', 10);
+INSERT INTO config (key, int_value) VALUES ('reviews_per_article', 10);
