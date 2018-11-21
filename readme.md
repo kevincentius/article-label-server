@@ -4,7 +4,7 @@ This project provides REST API to interact with the articles database.
 
 # Project Setup / Dependencies
 
-Check application.properties (database credentials)
+Check application.properties (database credentials, server port)
 
 # HTTP Headers required to access the API
 Username: "xxxx"

@@ -79,6 +79,7 @@ public class SpringWebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(authInterceptor)
         		.addPathPatterns("/**")
         		.excludePathPatterns("/public/**")
+        		.excludePathPatterns("/client/**")
         		.excludePathPatterns("/auth/**")
         		.excludePathPatterns("/error");
     }
